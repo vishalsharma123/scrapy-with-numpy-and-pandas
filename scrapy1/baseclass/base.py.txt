@@ -1,0 +1,27 @@
+from sqlalchemy.orm import sessionmaker
+
+from scraper_occog.models.historicalmodel import create_historical_occog_table
+from scraper_occog.models.logmodels import create_systemlog_table, create_w73tansfer_log_table
+from scraper_occog.models.w73transfer_ogccmodel import create_W73Transfer_table
+
+
+class WBaseActions():
+    """docstring for WBaseActions"""
+    def __init__(self, engine):
+        self.engine = engine
+        self.Session = sessionmaker(bind=self.engine)
+        create_W73Transfer_table(self.engine)
+        create_systemlog_table(engine)
+        create_w73tansfer_log_table(engine)
+        create_historical_occog_table(self.engine)
+
+
+class HBaseActions():
+    """docstring for WBaseActions"""
+    def __init__(self, engine):
+        self.engine = engine
+        self.Session = sessionmaker(bind=self.engine)
+
+        create_systemlog_table(engine)
+        create_w73tansfer_log_table(engine)
+        create_historical_occog_table(engine)
